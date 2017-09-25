@@ -1,7 +1,14 @@
 package com.gpsolutions.todolist.model;
 
-public enum Role {
+import org.springframework.security.core.GrantedAuthority;
 
-    USER, ADMIN
+public enum Role implements GrantedAuthority {
 
+    ROLE_USER, ROLE_ADMIN;
+
+
+    @Override
+    public String getAuthority() {
+        return name();
+    }
 }

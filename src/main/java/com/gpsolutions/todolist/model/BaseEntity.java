@@ -1,9 +1,12 @@
 package com.gpsolutions.todolist.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.SequenceGenerator;
 import org.hibernate.Hibernate;
 import org.springframework.data.domain.Persistable;
 
@@ -13,6 +16,8 @@ public class BaseEntity implements Persistable<Integer> {
 
     @Access(AccessType.PROPERTY)
     @Id
+    @SequenceGenerator(name="global_generator", sequenceName="global_sequence", initialValue = 100)
+    @GeneratedValue(generator = "global_generator")
     private Integer id;
 
     public BaseEntity() {
@@ -31,6 +36,7 @@ public class BaseEntity implements Persistable<Integer> {
         this.id = id;
     }
 
+    @JsonIgnore
     @Override
     public boolean isNew() {
         return id == null;
