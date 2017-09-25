@@ -6,7 +6,7 @@
 
   <groupId>com.gpsolutions</groupId>
   <artifactId>todolist</artifactId>
-  <version>0.0.3</version>
+  <version>0.0.4</version>
   <packaging>war</packaging>
 
   <parent>

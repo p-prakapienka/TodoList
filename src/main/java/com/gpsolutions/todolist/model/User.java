@@ -19,6 +19,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Entity
 public class User extends BaseEntity implements UserDetails {
 
+    public static final String ROLE_ADMIN = "ROLE_ADMIN";
+    public static final String ROLE_USER = "ROLE_USER";
+
     @Column(name = "username")
     private String username;
 

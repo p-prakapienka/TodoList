@@ -32,15 +32,15 @@ public class UserController {
 
     @PostMapping
     public User create(@RequestBody User user) {
-        return userService.save(user);
+        return userService.create(user);
     }
 
-    @PutMapping
-    public User update(@RequestBody User user) {
-        return userService.save(user);
+    @PutMapping("/{id}")
+    public User update(@PathVariable("id") int id, @RequestBody User user) {
+        return userService.update(id, user);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     public void delete(@PathVariable("id") int id) {
         userService.delete(id);
     }
