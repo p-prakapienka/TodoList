@@ -13,10 +13,12 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.Table;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
+@Table(name = "USERS")
 public class User extends BaseEntity implements UserDetails {
 
     public static final String ROLE_ADMIN = "ROLE_ADMIN";
