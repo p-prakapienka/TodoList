@@ -17,20 +17,8 @@ public class TodoServiceImpl implements TodoService {
     private TodoRepository todoRepository;
 
     @Override
-    public List<TodoList> getAll(User user) {
-        return todoRepository.findByOwnerId(user.getId());
-    }
-
-    @Override
     public List<TodoList> getAll(int userId) {
         return todoRepository.findByOwnerId(userId);
-    }
-
-    @Override
-    public TodoList get(User user, int listId) {
-        TodoList list = todoRepository.findByIdAndOwnerId(listId, user.getId());
-        ExceptionUtil.checkNotNull(listId, list, TodoList.class);
-        return list;
     }
 
     @Override
@@ -42,13 +30,7 @@ public class TodoServiceImpl implements TodoService {
 
     @Override
     @Transactional
-    public TodoList save(User user, TodoList list) {
-        if (!list.isNew()) {
-            TodoList original = get(user, list.getId());
-
-            original.setName(list.getName());
-            return todoRepository.save(original);
-        }
+    public TodoList create(User user, TodoList list) {
         list.setOwner(user);
         return todoRepository.save(list);
     }
@@ -63,21 +45,8 @@ public class TodoServiceImpl implements TodoService {
 
     @Override
     @Transactional
-    public void delete(User user, int listId) {
-        todoRepository.deleteByIdAndOwnerId(listId, user.getId());
-    }
-
-    @Override
-    @Transactional
     public void delete(int userId, int listId) {
         todoRepository.deleteByIdAndOwnerId(listId, userId);
-    }
-
-    @Override
-    @Transactional
-    public TodoList saveItem(User user, int listId, final TodoItem item) {
-        TodoList list = get(user, listId);
-        return saveItem(list, item);
     }
 
     @Override
@@ -85,14 +54,6 @@ public class TodoServiceImpl implements TodoService {
     public TodoList saveItem(int userId, int listId, TodoItem item) {
         TodoList list = get(userId, listId);
         return saveItem(list, item);
-    }
-
-    @Override
-    public TodoList deleteItem(User user, int listId, int itemId) {
-        TodoList list = get(user, listId);
-        TodoItem item = findItem(list, itemId);
-        list.getItems().remove(item);
-        return todoRepository.save(list);
     }
 
     @Override
