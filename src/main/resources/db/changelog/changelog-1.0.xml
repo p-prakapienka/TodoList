@@ -4,10 +4,12 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-  <changeSet id="init-database" author="p-prakapienka">
-    <sqlFile path="init.sql" relativeToChangelogFile="true"/>
+  <changeSet id="alterTodoItemTable1" author="p-prakapienka">
+    <addColumn tableName="TODO_ITEM">
+      <column name="done" type="BOOLEAN" defaultValue="FALSE"/>
+    </addColumn>
+    <renameColumn tableName="TODO_ITEM" oldColumnName="NAME"
+        newColumnName="DESCRIPTION"/>
   </changeSet>
-
-  <include file="db/changelog/changelog-1.0.xml"/>
 
 </databaseChangeLog>

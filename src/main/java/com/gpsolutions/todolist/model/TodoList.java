@@ -1,10 +1,13 @@
 package com.gpsolutions.todolist.model;
 
 import java.util.Set;
-import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -16,7 +19,15 @@ public class TodoList extends BaseEntity {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "todoList", cascade = {CascadeType.ALL})
+    @ManyToOne
+    @JoinColumn(name = "owner_id")
+    private User owner;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(
+        name = "TODO_ITEM",
+        joinColumns = @JoinColumn(name = "LIST_ID")
+    )
     private Set<TodoItem> items;
 
     public TodoList(String name) {
@@ -29,6 +40,14 @@ public class TodoList extends BaseEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
     }
 
     public Set<TodoItem> getItems() {
