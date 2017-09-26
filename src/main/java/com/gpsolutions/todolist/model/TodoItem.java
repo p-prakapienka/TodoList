@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 
 @Embeddable
 @Access(AccessType.PROPERTY)
@@ -16,6 +17,7 @@ public class TodoItem {
     private Integer id;
 
     @Column
+    @NotNull
     private String description;
 
     @Column
@@ -68,7 +70,7 @@ public class TodoItem {
         if (isDone() != todoItem.isDone()) {
             return false;
         }
-        if (!getId().equals(todoItem.getId())) {
+        if (getId() != null ? !getId().equals(todoItem.getId()) : todoItem.getId() != null) {
             return false;
         }
         return getDescription().equals(todoItem.getDescription());
@@ -76,7 +78,7 @@ public class TodoItem {
 
     @Override
     public int hashCode() {
-        int result = getId().hashCode();
+        int result = getId() != null ? getId().hashCode() : 0;
         result = 31 * result + getDescription().hashCode();
         result = 31 * result + (isDone() ? 1 : 0);
         return result;

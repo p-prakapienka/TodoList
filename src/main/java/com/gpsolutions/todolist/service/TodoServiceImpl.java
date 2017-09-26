@@ -62,11 +62,13 @@ public class TodoServiceImpl implements TodoService {
     }
 
     @Override
+    @Transactional
     public void delete(User user, int listId) {
         todoRepository.deleteByIdAndOwnerId(listId, user.getId());
     }
 
     @Override
+    @Transactional
     public void delete(int userId, int listId) {
         todoRepository.deleteByIdAndOwnerId(listId, userId);
     }

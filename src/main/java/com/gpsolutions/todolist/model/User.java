@@ -38,6 +38,7 @@ public class User extends BaseEntity implements UserDetails {
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<Role> roles;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "owner")
     private List<TodoList> todoLists;
 
@@ -102,5 +103,14 @@ public class User extends BaseEntity implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+            "id='" + getId() + '\'' +
+            "username='" + username + '\'' +
+            ", roles=" + roles +
+            '}';
     }
 }

@@ -30,6 +30,9 @@ public class TodoList extends BaseEntity {
     )
     private Set<TodoItem> items;
 
+    public TodoList() {
+    }
+
     public TodoList(String name) {
         this.name = name;
     }
