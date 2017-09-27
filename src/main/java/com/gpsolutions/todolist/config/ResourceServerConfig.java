@@ -10,16 +10,19 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Res
 @EnableResourceServer
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
+    public static final String RESOURCE_ID = "resource";
+
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()
+            .antMatchers("/api/admin/**").hasRole("ADMIN")
             .anyRequest().authenticated();
     }
 
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
         resources
-            .resourceId("bebe");
+            .resourceId(RESOURCE_ID);
     }
 }
