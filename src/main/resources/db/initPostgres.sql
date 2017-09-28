@@ -1,39 +1,39 @@
-DROP TABLE IF EXISTS TODO_ITEM;
-DROP TABLE IF EXISTS TODO_LIST;
-DROP TABLE IF EXISTS USER_ROLES;
-DROP TABLE IF EXISTS USERS;
-DROP SEQUENCE IF EXISTS global_seq;
+DROP TABLE IF EXISTS todolist.todo_item;
+DROP TABLE IF EXISTS todolist.todo_list;
+DROP TABLE IF EXISTS todolist.user_roles;
+DROP TABLE IF EXISTS todolist.users;
+DROP SEQUENCE IF EXISTS todolist.global_seq;
 
-CREATE SEQUENCE global_seq START WITH 100;
+CREATE SEQUENCE todolist.global_seq START WITH 100;
 
-CREATE TABLE USERS (
-  ID        INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
-  USERNAME  VARCHAR(255) NOT NULL,
-  PASSWORD  VARCHAR(255) NOT NULL
+CREATE TABLE todolist.users (
+  id        INTEGER PRIMARY KEY DEFAULT nextval('todolist.global_seq'),
+  username  VARCHAR(255) NOT NULL,
+  password  VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE USER_ROLES (
-  USER_ID   INTEGER,
-  ROLE      VARCHAR(20),
-  FOREIGN KEY (USER_ID) REFERENCES USERS (ID)
+CREATE TABLE todolist.user_roles (
+  user_id   INTEGER,
+  role      VARCHAR(20),
+  FOREIGN KEY (user_id) REFERENCES todolist.users (id)
 );
 
-CREATE TABLE TODO_LIST (
-  ID        INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
-  NAME      VARCHAR(255) NOT NULL,
-  OWNER_ID  INTEGER NOT NULL,
-  FOREIGN KEY (OWNER_ID) REFERENCES USERS(ID)
+CREATE TABLE todolist.todo_list (
+  id        INTEGER PRIMARY KEY DEFAULT nextval('todolist.global_seq'),
+  name      VARCHAR(255) NOT NULL,
+  owner_id  INTEGER NOT NULL,
+  FOREIGN KEY (owner_id) REFERENCES todolist.users(id)
 );
 
-CREATE TABLE TODO_ITEM (
-  ID        INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
-  NAME      VARCHAR(255) NOT NULL,
-  LIST_ID   INTEGER NOT NULL,
-  FOREIGN KEY (LIST_ID) REFERENCES TODO_LIST(ID)
+CREATE TABLE todolist.todo_item (
+  id        INTEGER PRIMARY KEY DEFAULT nextval('todolist.global_seq'),
+  name      VARCHAR(255) NOT NULL,
+  list_id   INTEGER NOT NULL,
+  FOREIGN KEY (list_id) REFERENCES todolist.todo_list(id)
 );
 
-INSERT INTO USERS (USERNAME, PASSWORD)
+INSERT INTO todolist.users (username, password)
 VALUES ('admin', '$2a$10$tAp5BLhtTBFIDp4MQKjKWuV6zZ6ySRaSsYj5bYkkAEdUMOIss86z6');
 
-INSERT INTO USER_ROLES (USER_ID, ROLE)
+INSERT INTO todolist.user_roles (user_id, role)
 VALUES (100, 'ROLE_ADMIN');

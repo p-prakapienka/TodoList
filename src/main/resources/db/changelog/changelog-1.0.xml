@@ -5,11 +5,11 @@
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
   <changeSet id="alterTodoItemTable1" author="p-prakapienka">
-    <addColumn tableName="TODO_ITEM">
+    <addColumn tableName="TODO_ITEM" schemaName="todolist">
       <column name="done" type="BOOLEAN" defaultValue="FALSE"/>
     </addColumn>
-    <renameColumn tableName="TODO_ITEM" oldColumnName="NAME"
-        newColumnName="DESCRIPTION"/>
+    <renameColumn tableName="TODO_ITEM" schemaName="todolist"
+        oldColumnName="NAME" newColumnName="DESCRIPTION"/>
   </changeSet>
 
 </databaseChangeLog>
