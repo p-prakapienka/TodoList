@@ -10,9 +10,17 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Table(name = "TODO_LIST")
+@Data
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+@NoArgsConstructor
 public class TodoList extends BaseEntity {
 
     @NotNull
@@ -29,36 +37,5 @@ public class TodoList extends BaseEntity {
         joinColumns = @JoinColumn(name = "LIST_ID")
     )
     private Set<TodoItem> items;
-
-    public TodoList() {
-    }
-
-    public TodoList(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public User getOwner() {
-        return owner;
-    }
-
-    public void setOwner(User owner) {
-        this.owner = owner;
-    }
-
-    public Set<TodoItem> getItems() {
-        return items;
-    }
-
-    public void setItems(Set<TodoItem> items) {
-        this.items = items;
-    }
 
 }

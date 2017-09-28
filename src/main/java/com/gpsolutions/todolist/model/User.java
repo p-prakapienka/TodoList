@@ -16,11 +16,19 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
 @Table(name = "USERS")
+@Data
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+@NoArgsConstructor
 public class User extends BaseEntity implements UserDetails {
 
     public static final String ROLE_ADMIN = "ROLE_ADMIN";
@@ -29,6 +37,7 @@ public class User extends BaseEntity implements UserDetails {
     @Column(name = "username")
     private String username;
 
+    @JsonProperty(access = Access.WRITE_ONLY)
     @Column(name = "password")
     private String password;
 
@@ -41,39 +50,6 @@ public class User extends BaseEntity implements UserDetails {
     @JsonIgnore
     @OneToMany(mappedBy = "owner")
     private List<TodoList> todoLists;
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    @JsonProperty(access = Access.WRITE_ONLY)
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
-
-    public List<TodoList> getTodoLists() {
-        return todoLists;
-    }
-
-    public void setTodoLists(List<TodoList> todoLists) {
-        this.todoLists = todoLists;
-    }
 
     @JsonIgnore
     @Override
@@ -105,12 +81,4 @@ public class User extends BaseEntity implements UserDetails {
         return true;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-            "id='" + getId() + '\'' +
-            "username='" + username + '\'' +
-            ", roles=" + roles +
-            '}';
-    }
 }

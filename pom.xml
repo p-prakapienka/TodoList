@@ -6,7 +6,7 @@
 
   <groupId>com.gpsolutions</groupId>
   <artifactId>todolist</artifactId>
-  <version>0.1.0</version>
+  <version>0.1.2</version>
   <packaging>war</packaging>
 
   <parent>
@@ -76,6 +76,13 @@
       <groupId>org.liquibase</groupId>
       <artifactId>liquibase-core</artifactId>
       <version>3.4.1</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>1.16.18</version>
+      <scope>provided</scope>
     </dependency>
   </dependencies>
 

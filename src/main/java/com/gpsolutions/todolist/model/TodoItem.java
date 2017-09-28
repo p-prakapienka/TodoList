@@ -8,9 +8,14 @@ import javax.persistence.Embeddable;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 @Embeddable
 @Access(AccessType.PROPERTY)
+@NoArgsConstructor
+@Data
 public class TodoItem {
 
     @GeneratedValue
@@ -23,64 +28,10 @@ public class TodoItem {
     @Column
     private boolean done;
 
-    public TodoItem() {
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public boolean isDone() {
-        return done;
-    }
-
-    public void setDone(boolean done) {
-        this.done = done;
-    }
-
     @JsonIgnore
     @Transient
     public boolean isNew() {
         return id == null;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        TodoItem todoItem = (TodoItem) o;
-
-        if (isDone() != todoItem.isDone()) {
-            return false;
-        }
-        if (getId() != null ? !getId().equals(todoItem.getId()) : todoItem.getId() != null) {
-            return false;
-        }
-        return getDescription().equals(todoItem.getDescription());
-    }
-
-    @Override
-    public int hashCode() {
-        int result = getId() != null ? getId().hashCode() : 0;
-        result = 31 * result + getDescription().hashCode();
-        result = 31 * result + (isDone() ? 1 : 0);
-        return result;
-    }
 }

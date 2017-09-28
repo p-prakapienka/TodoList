@@ -7,34 +7,26 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.SequenceGenerator;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.Hibernate;
 import org.springframework.data.domain.Persistable;
 
 @MappedSuperclass
 @Access(AccessType.FIELD)
+@ToString
+@NoArgsConstructor
 public class BaseEntity implements Persistable<Integer> {
 
     @Access(AccessType.PROPERTY)
     @Id
     @SequenceGenerator(name="global_generator", sequenceName="global_seq", initialValue = 100)
     @GeneratedValue(generator = "global_generator")
+    @Getter @Setter
     private Integer id;
-
-    public BaseEntity() {
-    }
-
-    public BaseEntity(Integer id) {
-        this.id = id;
-    }
-
-    @Override
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     @JsonIgnore
     @Override
