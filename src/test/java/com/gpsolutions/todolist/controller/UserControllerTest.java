@@ -6,15 +6,14 @@ import static com.gpsolutions.todolist.data.TestData.USER;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.isA;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import com.gpsolutions.todolist.service.UserService;
 import java.util.Arrays;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 
 public class UserControllerTest extends AbstractControllerTest {
@@ -37,7 +36,8 @@ public class UserControllerTest extends AbstractControllerTest {
             .andDo(print())
             .andExpect(status().isOk())
             .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.length()", is(2)));
+            .andExpect(jsonPath("$.length()", is(2)))
+            .andDo(document("users"));
 
     }
 
