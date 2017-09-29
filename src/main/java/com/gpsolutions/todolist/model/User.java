@@ -16,6 +16,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -26,9 +27,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Entity
 @Table(name = "USERS")
 @Data
-@EqualsAndHashCode(callSuper = true)
-@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true, exclude = "todoLists")
+@ToString(callSuper = true, exclude = "todoLists")
 @NoArgsConstructor
+@AllArgsConstructor
 public class User extends BaseEntity implements UserDetails {
 
     public static final String ROLE_ADMIN = "ROLE_ADMIN";
@@ -50,6 +52,15 @@ public class User extends BaseEntity implements UserDetails {
     @JsonIgnore
     @OneToMany(mappedBy = "owner")
     private List<TodoList> todoLists;
+
+    public User(Integer id, String username, String password,
+        Set<Role> roles, List<TodoList> todoLists) {
+        super(id);
+        this.username = username;
+        this.password = password;
+        this.roles = roles;
+        this.todoLists = todoLists;
+    }
 
     @JsonIgnore
     @Override

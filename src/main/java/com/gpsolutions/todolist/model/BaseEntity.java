@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.SequenceGenerator;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,6 +20,7 @@ import org.springframework.data.domain.Persistable;
 @Access(AccessType.FIELD)
 @ToString
 @NoArgsConstructor
+@AllArgsConstructor
 public class BaseEntity implements Persistable<Integer> {
 
     @Access(AccessType.PROPERTY)

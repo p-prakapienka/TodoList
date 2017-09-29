@@ -6,8 +6,10 @@ import javax.persistence.AccessType;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.GeneratedValue;
+import javax.persistence.OrderColumn;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -15,10 +17,11 @@ import lombok.NoArgsConstructor;
 @Embeddable
 @Access(AccessType.PROPERTY)
 @NoArgsConstructor
+@AllArgsConstructor
 @Data
 public class TodoItem {
 
-    @GeneratedValue
+    @OrderColumn //fixes strange element collection delete behaviour
     private Integer id;
 
     @Column
@@ -27,6 +30,10 @@ public class TodoItem {
 
     @Column
     private boolean done;
+
+    public TodoItem(String description) {
+        this.description = description;
+    }
 
     @JsonIgnore
     @Transient
