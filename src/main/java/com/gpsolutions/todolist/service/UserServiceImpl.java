@@ -2,6 +2,7 @@ package com.gpsolutions.todolist.service;
 
 import com.gpsolutions.todolist.model.User;
 import com.gpsolutions.todolist.repository.UserRepository;
+import com.gpsolutions.todolist.util.ExceptionUtil;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,7 +28,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public User get(int id) {
-        return userRepository.findOne(id);
+        User user = userRepository.findOne(id);
+        ExceptionUtil.checkNotNull(id, user, User.class);
+        return user;
     }
 
     @Override

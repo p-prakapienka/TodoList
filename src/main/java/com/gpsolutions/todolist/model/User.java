@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -50,7 +51,7 @@ public class User extends BaseEntity implements UserDetails {
     private Set<Role> roles;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "owner")
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
     private List<TodoList> todoLists;
 
     public User(Integer id, String username, String password,

@@ -1,5 +1,7 @@
 package com.gpsolutions.todolist.controller;
 
+import static com.gpsolutions.todolist.controller.UserController.USER_API;
+
 import com.gpsolutions.todolist.model.User;
 import com.gpsolutions.todolist.service.UserService;
 import java.util.List;
@@ -14,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping(USER_API)
 public class UserController {
+
+    public static final String USER_API = "/api/user";
 
     @Autowired
     private UserService userService;

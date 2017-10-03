@@ -20,6 +20,13 @@ public class TodoServiceTest extends AbstractServiceTest {
     private TodoService todoService;
 
     @Test
+    public void testGetAllByUser() {
+        List<TodoList> todoLists = todoService.getAll(USER.getId());
+        Assert.assertFalse(todoLists.isEmpty());
+        todoLists.forEach(tl -> Assert.assertFalse(tl.getItems().isEmpty()));
+    }
+
+    @Test
     public void testCreate() {
         TodoList todoList = new TodoList("newlist", null);
         todoList = todoService.create(USER, todoList);

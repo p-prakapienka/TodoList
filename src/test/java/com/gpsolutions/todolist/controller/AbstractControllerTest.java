@@ -25,7 +25,6 @@ import org.springframework.util.MultiValueMap;
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-@AutoConfigureRestDocs(outputDir = "target/snippets")
 public abstract class AbstractControllerTest {
 
     @Autowired

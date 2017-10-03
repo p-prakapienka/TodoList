@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 @SpringBootTest
 @ActiveProfiles("test")
 @Sql(scripts = "classpath:db/populateDB.sql")
-public class AbstractServiceTest {
+@Transactional
+public abstract class AbstractServiceTest {
 
 }
