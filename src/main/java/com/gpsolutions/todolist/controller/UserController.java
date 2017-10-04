@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(USER_API)
 public class UserController {
 
-    public static final String USER_API = "/api/user";
+    public static final String USER_API = "/api/admin/user";
 
     @Autowired
     private UserService userService;

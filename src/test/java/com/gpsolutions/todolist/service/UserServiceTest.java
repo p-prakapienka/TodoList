@@ -35,12 +35,6 @@ public class UserServiceTest extends AbstractServiceTest {
     @Autowired
     private PasswordEncoder encoder;
 
-    @Test(expected = AccessDeniedException.class)
-    @WithMockUser(authorities = ROLE_USER)
-    public void testMethodSecurity() {
-        userService.getAll();
-    }
-
     @Test
     public void testCreate() {
         String password = "newpassword";

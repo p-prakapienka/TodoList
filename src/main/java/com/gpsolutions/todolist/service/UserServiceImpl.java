@@ -1,8 +1,10 @@
 package com.gpsolutions.todolist.service;
 
+import com.gpsolutions.todolist.model.Role;
 import com.gpsolutions.todolist.model.User;
 import com.gpsolutions.todolist.repository.UserRepository;
 import com.gpsolutions.todolist.util.ExceptionUtil;
+import java.util.Collections;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -36,18 +38,20 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public User create(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRoles(Collections.singleton(Role.ROLE_USER));
         return userRepository.save(user);
     }
 
     @Override
     @Transactional
     public User update(int id, User user) {
-        User original = userRepository.findOne(id);
+        User original = get(id);
         if (!passwordEncoder.matches(user.getPassword(), original.getPassword())) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
         } else {
             user.setPassword(original.getPassword());
         }
+        user.setId(id);
         return userRepository.save(user);
     }
 
