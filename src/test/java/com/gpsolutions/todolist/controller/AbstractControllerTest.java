@@ -4,6 +4,7 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gpsolutions.todolist.model.User;
 import com.gpsolutions.todolist.service.UserService;
 import org.junit.runner.RunWith;
@@ -15,6 +16,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.oauth2.common.util.Jackson2JsonParser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -29,6 +31,9 @@ public abstract class AbstractControllerTest {
 
     @Autowired
     protected MockMvc mockMvc;
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @MockBean
     protected UserService userService;
@@ -51,6 +56,10 @@ public abstract class AbstractControllerTest {
             .andExpect(status().isOk())
             .andReturn().getResponse().getContentAsString();
         accessToken = new JacksonJsonParser().parseMap(response).get("access_token").toString();
+    }
+
+    protected <T> String toJson(T entity) throws Exception {
+        return objectMapper.writeValueAsString(entity);
     }
 
 }

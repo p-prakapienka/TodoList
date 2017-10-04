@@ -24,6 +24,7 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @NoArgsConstructor
+@AllArgsConstructor
 public class TodoList extends BaseEntity {
 
     @NotNull

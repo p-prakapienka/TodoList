@@ -1,5 +1,6 @@
 package com.gpsolutions.todolist.controller;
 
+import static com.gpsolutions.todolist.controller.UserTodoController.USER_TODO_API;
 import static com.gpsolutions.todolist.data.TestData.ADMIN_ENC;
 import static com.gpsolutions.todolist.data.TestData.USER;
 import static com.gpsolutions.todolist.data.TestData.USER_ENC;
@@ -16,6 +17,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.gpsolutions.todolist.model.TodoItem;
+import com.gpsolutions.todolist.model.TodoList;
+import com.gpsolutions.todolist.model.User;
 import com.gpsolutions.todolist.service.TodoService;
 import org.junit.Before;
 import org.junit.Test;
@@ -45,6 +49,21 @@ public class UserTodoControllerTest extends AbstractControllerTest {
             .andDo(print())
             .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.name", is(USER_LIST.getName())));
+    }
+
+    @Test
+    public void testCreate() throws Exception {
+        TodoList todoList = new TodoList("new list name", USER);
+        given(todoService.create(isA(User.class), isA(TodoList.class))).willReturn(todoList);
+
+        mockMvc.perform(post(USER_TODO_API)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .header("Authorization", "Bearer " + accessToken)
+                .content(toJson(todoList)))
+            .andDo(print())
+            .andExpect(status().isOk())
+            .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$.name", is(todoList.getName())));
     }
 
 }

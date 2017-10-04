@@ -37,6 +37,21 @@ public class TodoServiceTest extends AbstractServiceTest {
     }
 
     @Test
+    public void testUpdate() {
+        TodoList todoList = new TodoList();
+        todoList.setId(USER_LIST.getId());
+        todoList.setName("new name");
+        todoList.setOwner(USER_LIST.getOwner());
+        todoList.setItems(USER_LIST.getItems());
+
+        todoService.update(USER.getId(), todoList);
+
+        TodoList updated = todoService.get(USER.getId(), USER_LIST.getId());
+        Assert.assertNotEquals(USER_LIST, updated);
+        Assert.assertEquals("new name", updated.getName());
+    }
+
+    @Test
     public void testSaveItem() {
         TodoItem item = new TodoItem("newitem");
         todoService.saveItem(USER.getId(), USER_LIST.getId(), item);

@@ -1,5 +1,7 @@
 package com.gpsolutions.todolist.controller;
 
+import static com.gpsolutions.todolist.controller.AdminTodoController.ADMIN_TODO_API;
+
 import com.gpsolutions.todolist.model.TodoItem;
 import com.gpsolutions.todolist.model.TodoList;
 import com.gpsolutions.todolist.model.User;
@@ -15,8 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/admin/todo/user/{uid}")
+@RequestMapping(ADMIN_TODO_API)
 public class AdminTodoController extends TodoController {
+
+    public static final String ADMIN_TODO_API = "/api/admin/todo/user/{uid}";
 
     @GetMapping
     public List<TodoList> getAll(@PathVariable("uid") int userId) {

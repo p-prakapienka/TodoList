@@ -1,10 +1,12 @@
 package com.gpsolutions.todolist.controller;
 
+import static com.gpsolutions.todolist.controller.UserTodoController.USER_TODO_API;
+
 import com.gpsolutions.todolist.model.TodoItem;
 import com.gpsolutions.todolist.model.TodoList;
 import com.gpsolutions.todolist.model.User;
-import java.security.Principal;
 import java.util.List;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,8 +18,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/user/todo")
+@RequestMapping(value = USER_TODO_API, produces = MediaType.APPLICATION_JSON_VALUE)
 public class UserTodoController extends TodoController {
+
+    public static final String USER_TODO_API = "/api/user/todo";
 
     @GetMapping
     public List<TodoList> getAll(Authentication authentication) {
@@ -31,6 +35,7 @@ public class UserTodoController extends TodoController {
 
     @PostMapping
     public TodoList create(@RequestBody TodoList todoList, Authentication authentication) {
+        System.out.println(todoList);
         return super.create((User)authentication.getPrincipal(), todoList);
     }
 
