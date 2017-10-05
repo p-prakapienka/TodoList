@@ -15,6 +15,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Represents ADMIN user endpoints to operate on persisted users.
+ * Restricted to administrator usage only.
+ */
 @RestController
 @RequestMapping(USER_API)
 public class UserController {
@@ -24,26 +28,55 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    /**
+     * Endpoint to view all registered users
+     *
+     * @return collection of User objects
+     */
     @GetMapping
     public List<User> getAll() {
         return userService.getAll();
     }
 
+    /**
+     * Endpoint to get specific user information.
+     *
+     * @param id user identifier
+     * @return User object if found
+     */
     @GetMapping("/{id}")
     public User get(@PathVariable("id") int id) {
         return userService.get(id);
     }
 
+    /**
+     * Endpoint to create new user
+     *
+     * @param user User object to be persisted
+     * @return persisted User entity
+     */
     @PostMapping
     public User create(@RequestBody User user) {
         return userService.create(user);
     }
 
+    /**
+     * Endpoint to modify existing user
+     *
+     * @param id user identifier
+     * @param user User object to be merged with the existing one
+     * @return merged User entity
+     */
     @PutMapping("/{id}")
     public User update(@PathVariable("id") int id, @RequestBody User user) {
         return userService.update(id, user);
     }
 
+    /**
+     * Endpoint to remove existing user and all of its dependent entities
+     *
+     * @param id user identifier
+     */
     @DeleteMapping("/{id}")
     public void delete(@PathVariable("id") int id) {
         userService.delete(id);

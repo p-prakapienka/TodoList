@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * User controller class. Represents operations on authorized user.
+ */
 @RestController
 @RequestMapping(PROFILE_API)
 public class ProfileController {
@@ -22,16 +25,35 @@ public class ProfileController {
     @Autowired
     private UserService userService;
 
+    /**
+     * Endpoint to obtain authorized user information.
+     *
+     * @param authentication hold authorized user
+     * @return authorized user object without password
+     */
     @GetMapping
     public User profile(Authentication authentication) {
         return userService.get(((User)authentication.getPrincipal()).getId());
     }
 
+    /**
+     * Endpoint to save new user. No auth required.
+     *
+     * @param user User to be saved to database
+     * @return persisted User entity
+     */
     @PostMapping("/register")
     public User register(@RequestBody User user) {
         return userService.create(user);
     }
 
+    /**
+     * Endpoint to modify authorized user information.
+     *
+     * @param user User object to be merged with the existing one
+     * @param authentication holds authorized User
+     * @return merged User entity
+     */
     @PutMapping
     public User update(@RequestBody User user, Authentication authentication) {
         Integer userId = ((User)authentication.getPrincipal()).getId();
