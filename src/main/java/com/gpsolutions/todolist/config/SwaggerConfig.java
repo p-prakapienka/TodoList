@@ -39,20 +39,25 @@ public class SwaggerConfig {
     }
 
     private List<SecurityScheme> securitySchemes() {
-        AuthorizationScope readScope = new AuthorizationScope("read", "read");
-        AuthorizationScope writeScope = new AuthorizationScope("write", "write");
-        GrantType grantType = new ImplicitGrant(new LoginEndpoint("http://localhost:8089/oauth/authorize"), "token");
-        SecurityScheme scheme = new OAuth("oauth2scheme",
+        final AuthorizationScope readScope = new AuthorizationScope("read", "read");
+        final AuthorizationScope writeScope = new AuthorizationScope("write", "write");
+
+        final GrantType grantType = new ImplicitGrant(
+            new LoginEndpoint("http://localhost:8089/oauth/authorize"), "token");
+
+        final SecurityScheme scheme = new OAuth("oauth2scheme",
             Arrays.asList(readScope, writeScope), Collections.singletonList(grantType));
+
         return Collections.singletonList(scheme);
     }
 
     private List<SecurityContext> securityContexts() {
-        SecurityReference reference = new SecurityReference("oauth2scheme",
+        final SecurityReference reference = new SecurityReference("oauth2scheme",
             new AuthorizationScope[]{
                 new AuthorizationScope("read", "read"),
                 new AuthorizationScope("write", "write")
-        });
+            });
+
         return Collections.singletonList(SecurityContext.builder()
             .securityReferences(Collections.singletonList(reference))
             .build());

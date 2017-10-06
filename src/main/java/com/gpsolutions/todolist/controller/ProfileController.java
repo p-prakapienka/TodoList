@@ -32,8 +32,8 @@ public class ProfileController {
      * @return authorized user object without password
      */
     @GetMapping
-    public User profile(Authentication authentication) {
-        return userService.get(((User)authentication.getPrincipal()).getId());
+    public User profile(final Authentication authentication) {
+        return userService.get(((User) authentication.getPrincipal()).getId());
     }
 
     /**
@@ -43,7 +43,7 @@ public class ProfileController {
      * @return persisted User entity
      */
     @PostMapping("/register")
-    public User register(@RequestBody User user) {
+    public User register(@RequestBody final User user) {
         return userService.create(user);
     }
 
@@ -55,8 +55,8 @@ public class ProfileController {
      * @return merged User entity
      */
     @PutMapping
-    public User update(@RequestBody User user, Authentication authentication) {
-        Integer userId = ((User)authentication.getPrincipal()).getId();
+    public User update(@RequestBody final User user, final Authentication authentication) {
+        Integer userId = ((User) authentication.getPrincipal()).getId();
         return userService.update(userId, user);
     }
 

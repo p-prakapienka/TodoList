@@ -29,14 +29,14 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public User get(int id) {
-        User user = userRepository.findOne(id);
+    public User get(final int id) {
+        final User user = userRepository.findOne(id);
         ExceptionUtil.checkNotNull(id, user, User.class);
         return user;
     }
 
     @Override
-    public User create(User user) {
+    public User create(final User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRoles(Collections.singleton(Role.ROLE_USER));
         return userRepository.save(user);
@@ -44,8 +44,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     @Transactional
-    public User update(int id, User user) {
-        User original = get(id);
+    public User update(final int id, final User user) {
+        final User original = get(id);
         if (!passwordEncoder.matches(user.getPassword(), original.getPassword())) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
         } else {
@@ -56,13 +56,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(final int id) {
         userRepository.delete(id);
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username);
+    public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
+        final User user = userRepository.findByUsername(username);
         if (user == null) {
             throw new UsernameNotFoundException(username + " not found.");
         }

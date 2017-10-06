@@ -13,10 +13,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()
-                .antMatchers("/oauth/authorize").authenticated()
+            .antMatchers("/oauth/authorize").authenticated()
             .and()
             .requestMatchers()
-                .antMatchers("/oauth/authorize").and().httpBasic();
+            .antMatchers("/oauth/authorize").and().httpBasic();
     }
 
 }

@@ -33,7 +33,7 @@ public class UserTodoController extends TodoController {
      * @return collection of TodoList entities
      */
     @GetMapping
-    public List<TodoList> getAll(Authentication authentication) {
+    public List<TodoList> getAll(final Authentication authentication) {
         return super.getAll(getPrincipalId(authentication));
     }
 
@@ -45,7 +45,7 @@ public class UserTodoController extends TodoController {
      * @return TodoList object with the specified identifier
      */
     @GetMapping("/{id}")
-    public TodoList get(@PathVariable("id") int id, Authentication authentication) {
+    public TodoList get(@PathVariable("id") final int id, final Authentication authentication) {
         return super.get(getPrincipalId(authentication), id);
     }
 
@@ -57,9 +57,10 @@ public class UserTodoController extends TodoController {
      * @return persisted TodoList entity
      */
     @PostMapping
-    public TodoList create(@RequestBody TodoList todoList, Authentication authentication) {
+    public TodoList create(@RequestBody final TodoList todoList,
+        final Authentication authentication) {
         System.out.println(todoList);
-        return super.create((User)authentication.getPrincipal(), todoList);
+        return super.create((User) authentication.getPrincipal(), todoList);
     }
 
     /**
@@ -71,26 +72,27 @@ public class UserTodoController extends TodoController {
      * @return updated TodoList entity
      */
     @PutMapping("/{id}")
-    public TodoList update(@PathVariable("id") int listId, @RequestBody TodoList todoList,
+    public TodoList update(@PathVariable("id") final int listId,
+        @RequestBody final TodoList todoList,
         Authentication authentication) {
         return super.update(getPrincipalId(authentication), listId, todoList);
     }
 
     /**
-     * Endpoint to remove existing TodoList with all dependent items that is owned
-     * by authorized user
+     * Endpoint to remove existing TodoList with all dependent items that is owned by authorized
+     * user
      *
      * @param id TodoList identifier
      * @param authentication holds authorized user
      */
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable("id") int id, Authentication authentication) {
+    public void delete(@PathVariable("id") final int id, final Authentication authentication) {
         super.delete(getPrincipalId(authentication), id);
     }
 
     /**
-     * Endpoint to modify TodoList's embedded items collection by adding new TodoItem.
-     * TodoList must be owned by authorized user.
+     * Endpoint to modify TodoList's embedded items collection by adding new TodoItem. TodoList must
+     * be owned by authorized user.
      *
      * @param id TodoList identifier
      * @param item TodoItem to be added to TodoList's embedded collection
@@ -98,14 +100,14 @@ public class UserTodoController extends TodoController {
      * @return modified TodoList entity
      */
     @PostMapping("/{id}/item")
-    public TodoList addItem(@PathVariable("id") int id, @RequestBody TodoItem item,
+    public TodoList addItem(@PathVariable("id") final int id, @RequestBody final TodoItem item,
         Authentication authentication) {
         return super.addItem(getPrincipalId(authentication), id, item);
     }
 
     /**
-     * Endpoint to modify specific TodoList's item with the given item identifier.
-     * TodoList must be owned by authorized user.
+     * Endpoint to modify specific TodoList's item with the given item identifier. TodoList must be
+     * owned by authorized user.
      *
      * @param id TodoList identifier
      * @param itemId identifier of item to be modified
@@ -114,7 +116,8 @@ public class UserTodoController extends TodoController {
      * @return modified TodoList entity
      */
     @PutMapping("/{id}/item/{itemId}")
-    public TodoList updateItem(@PathVariable("id") int id, @PathVariable("itemId") int itemId,
+    public TodoList updateItem(@PathVariable("id") final int id,
+        @PathVariable("itemId") final int itemId,
         @RequestBody TodoItem item, Authentication authentication) {
         item.setId(itemId);
         return super.updateItem(getPrincipalId(authentication), id, itemId, item);
@@ -129,12 +132,13 @@ public class UserTodoController extends TodoController {
      * @return modified TodoList entity
      */
     @DeleteMapping("/{id}/item/{itemId}")
-    public TodoList deleteItem(@PathVariable("id") int id, @PathVariable("itemId") int itemId,
+    public TodoList deleteItem(@PathVariable("id") final int id,
+        @PathVariable("itemId") final int itemId,
         Authentication authentication) {
         return super.deleteItem(getPrincipalId(authentication), id, itemId);
     }
 
-    private int getPrincipalId(Authentication authentication) {
+    private int getPrincipalId(final Authentication authentication) {
         return ((User) authentication.getPrincipal()).getId();
     }
 

@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Represents ADMIN user endpoints to operate on persisted users.
- * Restricted to administrator usage only.
+ * Represents ADMIN user endpoints to operate on persisted users. Restricted to administrator usage
+ * only.
  */
 @RestController
 @RequestMapping(USER_API)
@@ -45,7 +45,7 @@ public class UserController {
      * @return User object if found
      */
     @GetMapping("/{id}")
-    public User get(@PathVariable("id") int id) {
+    public User get(@PathVariable("id") final int id) {
         return userService.get(id);
     }
 
@@ -56,7 +56,7 @@ public class UserController {
      * @return persisted User entity
      */
     @PostMapping
-    public User create(@RequestBody User user) {
+    public User create(@RequestBody final User user) {
         return userService.create(user);
     }
 
@@ -68,7 +68,7 @@ public class UserController {
      * @return merged User entity
      */
     @PutMapping("/{id}")
-    public User update(@PathVariable("id") int id, @RequestBody User user) {
+    public User update(@PathVariable("id") final int id, @RequestBody final User user) {
         return userService.update(id, user);
     }
 
@@ -78,7 +78,7 @@ public class UserController {
      * @param id user identifier
      */
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable("id") int id) {
+    public void delete(@PathVariable("id") final int id) {
         userService.delete(id);
     }
 

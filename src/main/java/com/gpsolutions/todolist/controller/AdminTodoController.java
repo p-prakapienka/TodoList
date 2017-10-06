@@ -30,7 +30,7 @@ public class AdminTodoController extends TodoController {
      * @return collection of TodoList entities
      */
     @GetMapping
-    public List<TodoList> getAll(@PathVariable("uid") int userId) {
+    public List<TodoList> getAll(@PathVariable("uid") final int userId) {
         return super.getAll(userId);
     }
 
@@ -42,7 +42,8 @@ public class AdminTodoController extends TodoController {
      * @return TodoList object with the specified identifier
      */
     @GetMapping("/list/{listId}")
-    public TodoList get(@PathVariable("listId") int listId, @PathVariable("uid") int userId) {
+    public TodoList get(@PathVariable("listId") final int listId,
+        @PathVariable("uid") final int userId) {
         return super.get(userId, listId);
     }
 
@@ -55,26 +56,28 @@ public class AdminTodoController extends TodoController {
      * @return updated TodoList entity
      */
     @PutMapping("/list/{listId}")
-    public TodoList update(@PathVariable("listId") int listId, @PathVariable("uid") int userId,
-        @RequestBody TodoList todoList) {
+    public TodoList update(@PathVariable("listId") final int listId,
+        @PathVariable("uid") final int userId,
+        @RequestBody final TodoList todoList) {
         return super.update(userId, listId, todoList);
     }
 
     /**
-     * Endpoint to remove existing TodoList with all dependent items that is owned
-     * by specified user
+     * Endpoint to remove existing TodoList with all dependent items that is owned by specified
+     * user
      *
      * @param listId TodoList identifier
      * @param userId TodoList owner identifier
      */
     @DeleteMapping("/list/{listId}")
-    public void delete(@PathVariable("listId") int listId, @PathVariable("uid") int userId) {
+    public void delete(@PathVariable("listId") final int listId,
+        @PathVariable("uid") final int userId) {
         super.delete(userId, listId);
     }
 
     /**
-     * Endpoint to modify TodoList's embedded items collection by adding new TodoItem.
-     * TodoList must be owned by specified user.
+     * Endpoint to modify TodoList's embedded items collection by adding new TodoItem. TodoList must
+     * be owned by specified user.
      *
      * @param listId TodoList identifier
      * @param item TodoItem to be added to TodoList's embedded collection
@@ -82,14 +85,14 @@ public class AdminTodoController extends TodoController {
      * @return modified TodoList entity
      */
     @PostMapping("/list/{listId}/item")
-    public TodoList addItem(@PathVariable("listId") int listId, @PathVariable("uid") int userId,
-        @RequestBody TodoItem item) {
+    public TodoList addItem(@PathVariable("listId") final int listId,
+        @PathVariable("uid") final int userId, @RequestBody final TodoItem item) {
         return super.addItem(userId, listId, item);
     }
 
     /**
-     * Endpoint to modify specific TodoList's item with the given item identifier.
-     * TodoList must be owned by specified user.
+     * Endpoint to modify specific TodoList's item with the given item identifier. TodoList must be
+     * owned by specified user.
      *
      * @param listId TodoList identifier
      * @param itemId identifier of item to be modified
@@ -98,8 +101,10 @@ public class AdminTodoController extends TodoController {
      * @return modified TodoList entity
      */
     @PutMapping("/list/{listId}/item/{itemId}")
-    public TodoList updateItem(@PathVariable("listId") int listId, @PathVariable("uid") int userId,
-        @PathVariable("itemId") int itemId, @RequestBody TodoItem item) {
+    public TodoList updateItem(@PathVariable("listId") final int listId,
+        @PathVariable("uid") final int userId,
+        @PathVariable("itemId") final int itemId,
+        @RequestBody final TodoItem item) {
         item.setId(itemId);
         return super.updateItem(userId, listId, itemId, item);
     }
@@ -113,8 +118,8 @@ public class AdminTodoController extends TodoController {
      * @return modified TodoList entity
      */
     @DeleteMapping("/list/{listId}/item/{itemId}")
-    public TodoList deleteItem(@PathVariable("listId") int listId, @PathVariable("uid") int userId,
-        @PathVariable("itemId") int itemId) {
+    public TodoList deleteItem(@PathVariable("listId") final int listId,
+        @PathVariable("uid") final int userId, @PathVariable("itemId") final int itemId) {
         return super.deleteItem(userId, listId, itemId);
     }
 

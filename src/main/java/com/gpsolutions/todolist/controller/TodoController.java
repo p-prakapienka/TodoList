@@ -12,37 +12,38 @@ public abstract class TodoController {
     @Autowired
     private TodoService todoService;
 
-    protected List<TodoList> getAll(int userId) {
+    protected List<TodoList> getAll(final int userId) {
         return todoService.getAll(userId);
     }
 
-    protected TodoList get(int userId, int id) {
+    protected TodoList get(final int userId, final int id) {
         return todoService.get(userId, id);
     }
 
-    protected TodoList create(User user, TodoList todoList) {
+    protected TodoList create(final User user, final TodoList todoList) {
         return todoService.create(user, todoList);
     }
 
-    protected TodoList update(int userId, int listId, TodoList todoList) {
+    protected TodoList update(final int userId, final int listId, final TodoList todoList) {
         todoList.setId(listId);
         return todoService.update(userId, todoList);
     }
 
-    protected void delete(int userId, int listId) {
+    protected void delete(final int userId, final int listId) {
         todoService.delete(userId, listId);
     }
 
-    protected TodoList addItem(int userId, int listId, TodoItem item) {
+    protected TodoList addItem(final int userId, final int listId, final TodoItem item) {
         return todoService.saveItem(userId, listId, item);
     }
 
-    protected TodoList updateItem(int userId, int listId, int itemId, TodoItem item) {
+    protected TodoList updateItem(final int userId, final int listId, final int itemId,
+        final TodoItem item) {
         item.setId(itemId);
         return todoService.saveItem(userId, listId, item);
     }
 
-    protected TodoList deleteItem(int userId, int listId, int itemId) {
+    protected TodoList deleteItem(final int userId, final int listId, final int itemId) {
         return todoService.deleteItem(userId, listId, itemId);
     }
 

@@ -17,65 +17,65 @@ public class TodoServiceImpl implements TodoService {
     private TodoRepository todoRepository;
 
     @Override
-    public List<TodoList> getAll(int userId) {
+    public List<TodoList> getAll(final int userId) {
         return todoRepository.findByOwnerId(userId);
     }
 
     @Override
-    public TodoList get(int userId, int listId) {
-        TodoList list = todoRepository.findByIdAndOwnerId(listId, userId);
+    public TodoList get(final int userId, int listId) {
+        final TodoList list = todoRepository.findByIdAndOwnerId(listId, userId);
         ExceptionUtil.checkNotNull(listId, list, TodoList.class);
         return list;
     }
 
     @Override
     @Transactional
-    public TodoList create(User user, TodoList list) {
+    public TodoList create(final User user, final TodoList list) {
         list.setOwner(user);
         return todoRepository.save(list);
     }
 
     @Override
     @Transactional
-    public TodoList update(int userId, TodoList list) {
-        TodoList original = get(userId, list.getId());
+    public TodoList update(final int userId, final TodoList list) {
+        final TodoList original = get(userId, list.getId());
         original.setName(list.getName());
         return todoRepository.save(original);
     }
 
     @Override
     @Transactional
-    public void delete(int userId, int listId) {
+    public void delete(final int userId, final int listId) {
         todoRepository.deleteByIdAndOwnerId(listId, userId);
     }
 
     @Override
     @Transactional
-    public TodoList saveItem(int userId, int listId, TodoItem item) {
-        TodoList list = get(userId, listId);
+    public TodoList saveItem(final int userId, final int listId, final TodoItem item) {
+        final TodoList list = get(userId, listId);
         return saveItem(list, item);
     }
 
     @Override
-    public TodoList deleteItem(int userId, int listId, int itemId) {
-        TodoList list = get(userId, listId);
-        TodoItem item = findItem(list, itemId);
+    public TodoList deleteItem(final int userId, final int listId, final int itemId) {
+        final TodoList list = get(userId, listId);
+        final TodoItem item = findItem(list, itemId);
         list.getItems().remove(item);
         return todoRepository.save(list);
     }
 
-    private TodoList saveItem(TodoList list, TodoItem item) {
+    private TodoList saveItem(final TodoList list, final TodoItem item) {
         if (item.isNew()) {
             list.getItems().add(item);
         } else {
-            TodoItem todoItem = findItem(list, item.getId());
+            final TodoItem todoItem = findItem(list, item.getId());
             todoItem.setDescription(item.getDescription());
             todoItem.setDone(item.isDone());
         }
         return todoRepository.save(list);
     }
 
-    private TodoItem findItem(TodoList list, int itemId) {
+    private TodoItem findItem(final TodoList list, final int itemId) {
         return list.getItems()
             .stream()
             .filter(i -> i.getId().equals(itemId))
