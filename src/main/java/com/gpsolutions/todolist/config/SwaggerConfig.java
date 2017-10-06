@@ -2,6 +2,7 @@ package com.gpsolutions.todolist.config;
 
 import static com.gpsolutions.todolist.config.ResourceServerConfig.RESOURCE_ID;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import org.springframework.context.annotation.Bean;
@@ -10,8 +11,9 @@ import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.AuthorizationScope;
 import springfox.documentation.service.GrantType;
+import springfox.documentation.service.ImplicitGrant;
+import springfox.documentation.service.LoginEndpoint;
 import springfox.documentation.service.OAuth;
-import springfox.documentation.service.ResourceOwnerPasswordCredentialsGrant;
 import springfox.documentation.service.SecurityReference;
 import springfox.documentation.service.SecurityScheme;
 import springfox.documentation.spi.DocumentationType;
@@ -37,16 +39,20 @@ public class SwaggerConfig {
     }
 
     private List<SecurityScheme> securitySchemes() {
-        AuthorizationScope scope = new AuthorizationScope("global", "global");
-        GrantType grantType = new ResourceOwnerPasswordCredentialsGrant("http://localhost:8089/oauth/token");
+        AuthorizationScope readScope = new AuthorizationScope("read", "read");
+        AuthorizationScope writeScope = new AuthorizationScope("write", "write");
+        GrantType grantType = new ImplicitGrant(new LoginEndpoint("http://localhost:8089/oauth/authorize"), "token");
         SecurityScheme scheme = new OAuth("oauth2scheme",
-            Collections.singletonList(scope), Collections.singletonList(grantType));
+            Arrays.asList(readScope, writeScope), Collections.singletonList(grantType));
         return Collections.singletonList(scheme);
     }
 
     private List<SecurityContext> securityContexts() {
         SecurityReference reference = new SecurityReference("oauth2scheme",
-            new AuthorizationScope[]{new AuthorizationScope("global", "accessEverything")});
+            new AuthorizationScope[]{
+                new AuthorizationScope("read", "read"),
+                new AuthorizationScope("write", "write")
+        });
         return Collections.singletonList(SecurityContext.builder()
             .securityReferences(Collections.singletonList(reference))
             .build());
@@ -55,14 +61,14 @@ public class SwaggerConfig {
     @Bean
     SecurityConfiguration security() {
         return new SecurityConfiguration(
-            "clientId",
+            "swagger-ui",
             "secret",
             RESOURCE_ID,
             "todolist",
             "todo_api_key",
             ApiKeyVehicle.HEADER,
             "todo_api",
-            ","
+            " "
         );
     }
 

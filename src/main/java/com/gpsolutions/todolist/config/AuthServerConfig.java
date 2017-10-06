@@ -35,7 +35,13 @@ public class AuthServerConfig extends AuthorizationServerConfigurerAdapter {
             .accessTokenValiditySeconds(120)
             .scopes("read", "write")
             .secret("secret")
-            .resourceIds(RESOURCE_ID);
+            .resourceIds(RESOURCE_ID)
+            .and()
+            .withClient("swagger-ui")
+            .authorizedGrantTypes("implicit")
+            .scopes("read", "write")
+            .resourceIds(RESOURCE_ID)
+            .autoApprove(true);
     }
 
     @Override
