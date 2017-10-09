@@ -21,6 +21,7 @@ import com.gpsolutions.todolist.model.TodoItem;
 import com.gpsolutions.todolist.model.TodoList;
 import com.gpsolutions.todolist.model.User;
 import com.gpsolutions.todolist.service.TodoService;
+import com.gpsolutions.todolist.util.NotFoundException;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -49,6 +50,21 @@ public class UserTodoControllerTest extends AbstractControllerTest {
             .andDo(print())
             .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.name", is(USER_LIST.getName())));
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testGetNotFound() throws Exception {
+        given(todoService.get(anyInt(), anyInt())).willThrow(NotFoundException.class);
+
+        mockMvc.perform(get("/api/user/todo/99")
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
+            .header("Authorization", "Bearer " + accessToken))
+            .andExpect(status().isNotFound())
+            .andDo(print())
+            .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$.error").exists());
+
     }
 
     @Test
