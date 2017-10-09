@@ -39,7 +39,7 @@ public class AuthServerConfig extends AuthorizationServerConfigurerAdapter {
             .and()
             .withClient("swagger-ui")
             .authorizedGrantTypes("implicit")
-            .scopes("read", "write")
+            .scopes("read", "write", "vendorExtensions")
             .resourceIds(RESOURCE_ID)
             .autoApprove(true);
     }
