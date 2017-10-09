@@ -1,0 +1,31 @@
+server:
+  port: 8089
+
+spring:
+  application:
+    name: TodoList
+  datasource:
+      url: jdbc:h2:/opt/todolist_db;mode=PostgreSQL;DB_CLOSE_ON_EXIT=FALSE;
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        default_schema: todolist
+liquibase:
+  default-schema: todolist
+  change-log: classpath:db/changelog-h2-master.xml
+
+---
+
+spring:
+  profiles: postgres
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://ec2-46-137-73-65.eu-west-1.compute.amazonaws.com:5432/ddj6c9gdnd2se0?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory
+    username: ujbfbvdqsdubim
+    password: qjZn6b_TwaSbb1nC7xPlvxwVeW
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+liquibase:
+  change-log: classpath:db/changelog-postgres-master.xml
