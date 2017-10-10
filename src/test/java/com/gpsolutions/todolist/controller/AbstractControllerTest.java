@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gpsolutions.todolist.model.User;
 import com.gpsolutions.todolist.service.UserService;
+import lombok.val;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -49,7 +50,7 @@ public abstract class AbstractControllerTest {
         params.add("grant_type", "password");
         params.add("username", user.getUsername());
         params.add("password", user.getPassword());
-        String response = mockMvc
+        val response = mockMvc
             .perform(post("/oauth/token")
                 .with(httpBasic("clientId", "secret"))
                 .params(params))

@@ -18,6 +18,7 @@ import com.gpsolutions.todolist.model.Role;
 import com.gpsolutions.todolist.model.User;
 import java.util.Arrays;
 import java.util.Collections;
+import lombok.val;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.MediaType;
@@ -64,7 +65,7 @@ public class UserControllerTest extends AbstractControllerTest {
 
     @Test
     public void testCreate() throws Exception {
-        final User user = new User("new name", "password",
+        val user = new User("new name", "password",
             Collections.singleton(Role.ROLE_USER), Collections.emptyList());
         given(userService.create(isA(User.class))).willReturn(user);
 
@@ -82,7 +83,7 @@ public class UserControllerTest extends AbstractControllerTest {
 
     @Test
     public void testUpdate() throws Exception {
-        final User updated = new User(USER.getId(), "new name", USER.getPassword(),
+        val updated = new User(USER.getId(), "new name", USER.getPassword(),
             USER.getRoles(), USER.getTodoLists());
         given(userService.update(anyInt(), isA(User.class))).willReturn(updated);
 

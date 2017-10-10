@@ -17,6 +17,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.gpsolutions.todolist.model.Role;
 import com.gpsolutions.todolist.model.User;
 import java.util.Collections;
+import lombok.val;
 import org.junit.Test;
 import org.springframework.http.MediaType;
 
@@ -43,7 +44,7 @@ public class ProfileControllerTest extends AbstractControllerTest {
 
     @Test
     public void testRegister() throws Exception {
-        User registered = new User(99,"username", "password",
+        val registered = new User(99,"username", "password",
             Collections.singleton(Role.ROLE_USER), Collections.emptyList());
         given(userService.create(isA(User.class))).willReturn(registered);
 

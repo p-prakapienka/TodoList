@@ -6,6 +6,7 @@ import static com.gpsolutions.todolist.data.TestData.USER_LIST;
 import com.gpsolutions.todolist.model.TodoItem;
 import com.gpsolutions.todolist.model.TodoList;
 import java.util.List;
+import lombok.val;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class TodoServiceTest extends AbstractServiceTest {
 
     @Test
     public void testGetAllByUser() {
-        List<TodoList> todoLists = todoService.getAll(USER.getId());
+        val todoLists = todoService.getAll(USER.getId());
         Assert.assertFalse(todoLists.isEmpty());
         todoLists.forEach(tl -> Assert.assertFalse(tl.getItems().isEmpty()));
     }
@@ -38,7 +39,7 @@ public class TodoServiceTest extends AbstractServiceTest {
 
     @Test
     public void testUpdate() {
-        TodoList todoList = new TodoList();
+        val todoList = new TodoList();
         todoList.setId(USER_LIST.getId());
         todoList.setName("new name");
         todoList.setOwner(USER_LIST.getOwner());
@@ -46,17 +47,17 @@ public class TodoServiceTest extends AbstractServiceTest {
 
         todoService.update(USER.getId(), todoList);
 
-        TodoList updated = todoService.get(USER.getId(), USER_LIST.getId());
+        val updated = todoService.get(USER.getId(), USER_LIST.getId());
         Assert.assertNotEquals(USER_LIST, updated);
         Assert.assertEquals("new name", updated.getName());
     }
 
     @Test
     public void testSaveItem() {
-        TodoItem item = new TodoItem("newitem");
+        val item = new TodoItem("newitem");
         todoService.saveItem(USER.getId(), USER_LIST.getId(), item);
 
-        TodoList list = todoService.get(USER.getId(), USER_LIST.getId());
+        val list = todoService.get(USER.getId(), USER_LIST.getId());
         Assert.assertEquals(3, list.getItems().size());
     }
 
@@ -64,13 +65,13 @@ public class TodoServiceTest extends AbstractServiceTest {
     public void testDeleteItem() {
         todoService.deleteItem(USER.getId(), USER_LIST.getId(), 3);
 
-        TodoList list = todoService.get(USER.getId(), USER_LIST.getId());
+        val list = todoService.get(USER.getId(), USER_LIST.getId());
         Assert.assertEquals(1, list.getItems().size());
     }
 
     @Test
     public void testGet() {
-        TodoList list = todoService.get(USER.getId(), USER_LIST.getId());
+        val list = todoService.get(USER.getId(), USER_LIST.getId());
         Assert.assertEquals(2, list.getItems().size());
     }
 

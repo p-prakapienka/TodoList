@@ -8,6 +8,7 @@ import com.gpsolutions.todolist.model.TodoItem;
 import com.gpsolutions.todolist.model.TodoList;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +21,7 @@ public class TodoRepositoryTest extends AbstractRepositoryTest {
 
     @Test
     public void testGet() {
-        repository.findAll().forEach(System.out::println);
-        List<TodoList> todos = repository.findByOwnerId(USER.getId());
+        val todos = repository.findByOwnerId(USER.getId());
 
         Assert.assertEquals(1, todos.size());
         Assert.assertEquals(2, todos.get(0).getItems().size());
@@ -29,25 +29,25 @@ public class TodoRepositoryTest extends AbstractRepositoryTest {
 
     @Test
     public void testInsertItem() {
-        TodoList todo = repository.findByIdAndOwnerId(ADMIN_LIST.getId(), ADMIN.getId());
+        val todo = repository.findByIdAndOwnerId(ADMIN_LIST.getId(), ADMIN.getId());
 
         Assert.assertNotNull(todo);
         todo.getItems().add(new TodoItem("Test item"));
         repository.save(todo);
 
-        TodoList updated = repository.findByIdAndOwnerId(ADMIN_LIST.getId(), ADMIN.getId());
+        val updated = repository.findByIdAndOwnerId(ADMIN_LIST.getId(), ADMIN.getId());
         Assert.assertEquals(3, updated.getItems().size());
     }
 
     @Test
     public void testDeleteItem() {
-        TodoList todo = repository.findByIdAndOwnerId(ADMIN_LIST.getId(), ADMIN.getId());
+        val todo = repository.findByIdAndOwnerId(ADMIN_LIST.getId(), ADMIN.getId());
 
         Assert.assertNotNull(todo);
         todo.getItems().remove(todo.getItems().stream().findFirst().get());
         repository.save(todo);
 
-        TodoList updated = repository.findByIdAndOwnerId(ADMIN_LIST.getId(), ADMIN.getId());
+        val updated = repository.findByIdAndOwnerId(ADMIN_LIST.getId(), ADMIN.getId());
         Assert.assertEquals(1, updated.getItems().size());
     }
 

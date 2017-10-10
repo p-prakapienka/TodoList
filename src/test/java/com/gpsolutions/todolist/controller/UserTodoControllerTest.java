@@ -22,6 +22,7 @@ import com.gpsolutions.todolist.model.TodoList;
 import com.gpsolutions.todolist.model.User;
 import com.gpsolutions.todolist.service.TodoService;
 import com.gpsolutions.todolist.util.NotFoundException;
+import lombok.val;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -69,7 +70,7 @@ public class UserTodoControllerTest extends AbstractControllerTest {
 
     @Test
     public void testCreate() throws Exception {
-        TodoList todoList = new TodoList("new list name", USER);
+        val todoList = new TodoList("new list name", USER);
         given(todoService.create(isA(User.class), isA(TodoList.class))).willReturn(todoList);
 
         mockMvc.perform(post(USER_TODO_API)

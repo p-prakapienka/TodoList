@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+import lombok.val;
 import org.junit.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
@@ -85,7 +86,7 @@ public class AdminTodoControllerTest extends AbstractControllerTest {
     public void testUpdate() throws Exception {
         authorizeAdmin();
 
-        TodoList updated = new TodoList("newlist", USER_LIST.getOwner(), USER_LIST.getItems());
+        val updated = new TodoList("newlist", USER_LIST.getOwner(), USER_LIST.getItems());
         updated.setId(USER_LIST.getId());
 
         given(todoService.update(anyInt(), isA(TodoList.class))).willReturn(updated);
@@ -116,8 +117,8 @@ public class AdminTodoControllerTest extends AbstractControllerTest {
     public void testAddItem() throws Exception {
         authorizeAdmin();
 
-        TodoList updated = new TodoList(USER_LIST.getId(), USER_LIST.getName(), USER);
-        TodoItem newItem = new TodoItem("newitem");
+        val updated = new TodoList(USER_LIST.getId(), USER_LIST.getName(), USER);
+        val newItem = new TodoItem("newitem");
         List<TodoItem> items = new ArrayList<>();
         items.add(newItem);
         items.addAll(USER_LIST.getItems());
@@ -139,11 +140,11 @@ public class AdminTodoControllerTest extends AbstractControllerTest {
     public void testUpdateItem() throws Exception {
         authorizeAdmin();
 
-        TodoList updated = new TodoList(USER_LIST.getId(), USER_LIST.getName(), USER);
+        val updated = new TodoList(USER_LIST.getId(), USER_LIST.getName(), USER);
         updated.setItems(USER_LIST.getItems().stream()
             .map(i -> new TodoItem(i.getId(), i.getDescription(), i.isDone()))
             .collect(Collectors.toList()));
-        TodoItem updatedItem = updated.getItems().get(1);
+        val updatedItem = updated.getItems().get(1);
         updatedItem.setDone(true);
 
         given(todoService.saveItem(anyInt(), anyInt(), isA(TodoItem.class))).willReturn(updated);
@@ -163,8 +164,8 @@ public class AdminTodoControllerTest extends AbstractControllerTest {
     public void testDeleteItem() throws Exception {
         authorizeAdmin();
 
-        final TodoItem itemToRemove = USER_LIST.getItems().get(0);
-        TodoList updated = new TodoList(USER_LIST.getId(), USER_LIST.getName(), USER);
+        val itemToRemove = USER_LIST.getItems().get(0);
+        val updated = new TodoList(USER_LIST.getId(), USER_LIST.getName(), USER);
         updated.setItems(USER_LIST.getItems().stream()
             .filter(i -> i.getId().equals(itemToRemove.getId()))
             .collect(Collectors.toList()));

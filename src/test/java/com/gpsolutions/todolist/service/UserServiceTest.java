@@ -13,6 +13,7 @@ import com.gpsolutions.todolist.util.NotFoundException;
 import java.util.Collections;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,27 +38,27 @@ public class UserServiceTest extends AbstractServiceTest {
 
     @Test
     public void testCreate() {
-        String password = "newpassword";
-        User newUser = new User("newuser", password,
+        val password = "newpassword";
+        val newUser = new User("newuser", password,
             Collections.singleton(Role.ROLE_USER), Collections.emptyList());
 
-        User created = userService.create(newUser);
+        val created = userService.create(newUser);
 
         Assert.assertTrue(encoder.matches(password, created.getPassword()));
 
-        List<User> users = userService.getAll();
+        val users = userService.getAll();
         Assert.assertEquals(3, users.size());
     }
 
     @Test
     public void testGetAll() {
-        List<User> users = userService.getAll();
+        val users = userService.getAll();
         Assert.assertEquals(2, users.size());
     }
 
     @Test
     public void testGet() {
-        User user = userService.get(ADMIN.getId());
+        val user = userService.get(ADMIN.getId());
         Assert.assertEquals(ADMIN_ENC, user);
     }
 
@@ -70,13 +71,13 @@ public class UserServiceTest extends AbstractServiceTest {
     public void testDelete() {
         userService.delete(USER.getId());
 
-        List<User> users = userService.getAll();
+        val users = userService.getAll();
         Assert.assertEquals(1, users.size());
     }
 
     @Test
     public void testLoadUserByUserName() {
-        UserDetails user = userDetailsService.loadUserByUsername(USER.getUsername());
+        val user = userDetailsService.loadUserByUsername(USER.getUsername());
         Assert.assertEquals(USER, user);
     }
 
