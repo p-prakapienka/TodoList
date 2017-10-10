@@ -2,8 +2,10 @@ package com.gpsolutions.todolist.controller;
 
 import static com.gpsolutions.todolist.controller.ProfileController.PROFILE_API;
 
+import com.gpsolutions.todolist.model.Role;
 import com.gpsolutions.todolist.model.User;
 import com.gpsolutions.todolist.service.UserService;
+import java.util.Collections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,6 +46,7 @@ public class ProfileController {
      */
     @PostMapping("/register")
     public User register(@RequestBody final User user) {
+        user.setRoles(Collections.singleton(Role.ROLE_USER));
         return userService.create(user);
     }
 
@@ -56,7 +59,10 @@ public class ProfileController {
      */
     @PutMapping
     public User update(@RequestBody final User user, final Authentication authentication) {
-        Integer userId = ((User) authentication.getPrincipal()).getId();
+        User principal = (User) authentication.getPrincipal();
+        user.setRoles(principal.getRoles().contains(Role.ROLE_ADMIN)
+            ? user.getRoles() : principal.getRoles());
+        Integer userId = (principal).getId();
         return userService.update(userId, user);
     }
 
