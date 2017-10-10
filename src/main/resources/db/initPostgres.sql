@@ -1,3 +1,6 @@
+DROP TRIGGER IF EXISTS item_id_trigger ON todolist.todo_item;
+DROP FUNCTION IF EXISTS replace_null_id();
+
 DROP TABLE IF EXISTS todolist.todo_item;
 DROP TABLE IF EXISTS todolist.todo_list;
 DROP TABLE IF EXISTS todolist.user_roles;
@@ -37,3 +40,19 @@ VALUES ('admin', '$2a$10$tAp5BLhtTBFIDp4MQKjKWuV6zZ6ySRaSsYj5bYkkAEdUMOIss86z6')
 
 INSERT INTO todolist.user_roles (user_id, role)
 VALUES (100, 'ROLE_ADMIN');
+
+create function replace_null_id() returns trigger
+language plpgsql
+as $$
+BEGIN
+  IF NEW.id IS NULL THEN
+    NEW.id := nextval('todolist.global_seq');
+  END IF;
+  RETURN NEW;
+END
+$$
+;
+
+CREATE TRIGGER item_id_trigger BEFORE INSERT ON todolist.todo_item
+FOR EACH ROW
+EXECUTE PROCEDURE replace_null_id();

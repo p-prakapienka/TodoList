@@ -5,7 +5,7 @@
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
   <changeSet id="init-database" author="p-prakapienka">
-    <sqlFile path="initPostgres.sql" relativeToChangelogFile="true"/>
+    <sqlFile path="initPostgres.sql" relativeToChangelogFile="true" splitStatements="false"/>
   </changeSet>
 
   <include file="db/changelog/changelog-1.0.xml"/>
