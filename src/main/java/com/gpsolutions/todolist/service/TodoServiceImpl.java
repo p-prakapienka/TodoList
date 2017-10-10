@@ -6,6 +6,8 @@ import com.gpsolutions.todolist.model.User;
 import com.gpsolutions.todolist.repository.TodoRepository;
 import com.gpsolutions.todolist.util.ExceptionUtil;
 import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +17,9 @@ public class TodoServiceImpl implements TodoService {
 
     @Autowired
     private TodoRepository todoRepository;
+
+    @PersistenceContext
+    private EntityManager em;
 
     @Override
     public List<TodoList> getAll(final int userId) {
@@ -72,7 +77,9 @@ public class TodoServiceImpl implements TodoService {
             todoItem.setDescription(item.getDescription());
             todoItem.setDone(item.isDone());
         }
-        return todoRepository.save(list);
+        final TodoList saved = todoRepository.saveAndFlush(list);
+        em.refresh(saved);
+        return saved;
     }
 
     private TodoItem findItem(final TodoList list, final int itemId) {

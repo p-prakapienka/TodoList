@@ -59,10 +59,10 @@ public class ProfileController {
      */
     @PutMapping
     public User update(@RequestBody final User user, final Authentication authentication) {
-        User principal = (User) authentication.getPrincipal();
+        final User principal = (User) authentication.getPrincipal();
         user.setRoles(principal.getRoles().contains(Role.ROLE_ADMIN)
             ? user.getRoles() : principal.getRoles());
-        Integer userId = (principal).getId();
+        final Integer userId = (principal).getId();
         return userService.update(userId, user);
     }
 

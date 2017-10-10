@@ -32,7 +32,7 @@ public class AuthServerConfig extends AuthorizationServerConfigurerAdapter {
             .inMemory()
             .withClient("clientId")
             .authorizedGrantTypes("password", "refresh-token")
-            .accessTokenValiditySeconds(120)
+            .accessTokenValiditySeconds(1200)
             .scopes("read", "write")
             .secret("secret")
             .resourceIds(RESOURCE_ID)
