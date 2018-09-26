@@ -16,6 +16,8 @@
   </parent>
 
   <properties>
+    <spring.profile>default</spring.profile>
+
     <java.version>1.8</java.version>
   </properties>
 
@@ -103,8 +105,35 @@
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration>
+          <outputDirectory>
+
+          </outputDirectory>
+        </configuration>
       </plugin>
     </plugins>
   </build>
+
+  <profiles>
+    <profile>
+      <id>local-deployment</id>
+
+      <properties>
+        <spring.profile>postgres</spring.profile>
+      </properties>
+
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-maven-plugin</artifactId>
+            <configuration>
+              <outputDirectory>d:\soft\apache-tomcat-8.0.47\webapps</outputDirectory>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 
 </project>
